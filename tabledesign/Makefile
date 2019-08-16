@@ -10,9 +10,11 @@ NATIVE_CFLAGS := -Wall -Wno-uninitialized -O2
 
 LDFLAGS := -lm -laudiofile
 
-default: tabledesign_native
-native: tabledesign_native
+default: native
+all: irix native
+
 irix: tabledesign_irix
+native: tabledesign_native
 
 clean:
 	$(RM) *.o tabledesign_irix tabledesign_native
@@ -26,4 +28,4 @@ tabledesign_irix: tabledesign.o codebook.o estimate.o print.o
 tabledesign_native: tabledesign.c codebook.c estimate.c print.c
 	$(NATIVE_CC) $(NATIVE_CFLAGS) $^ -o $@ $(LDFLAGS)
 
-.PHONY: default irix native clean
+.PHONY: default all irix native clean

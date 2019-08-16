@@ -71,7 +71,7 @@ char *ReadPString(FILE *ifile)
     return st;
 }
 
-s32 lookupMarker(s32 *sample, s16 loopPoint, Marker *markers, s32 nmarkers)
+s32 lookupMarker(u32 *sample, s16 loopPoint, Marker *markers, s32 nmarkers)
 {
     s32 i;
 
@@ -97,16 +97,10 @@ ALADPCMloop *readlooppoints(FILE *ifile, s16 *nloops)
     for (i = 0; i < *nloops; i++)
     {
         fread(&al[i], sizeof(ALADPCMloop), 1, ifile);
-#ifndef __sgi
-        {
-            s32 j;
-            BSWAP32(al[i].start)
-            BSWAP32(al[i].end)
-            BSWAP32(al[i].count)
-            for (j = 0; j < 16; j++)
-                BSWAP16(al[i].state[j])
-        }
-#endif
+        BSWAP32(al[i].start)
+        BSWAP32(al[i].end)
+        BSWAP32(al[i].count)
+        BSWAP16_MANY(al[i].state, 16)
     }
     return al;
 }

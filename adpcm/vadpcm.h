@@ -17,9 +17,11 @@ typedef double f64;
 #ifdef __sgi
 #  define BSWAP16(x)
 #  define BSWAP32(x)
+#  define BSWAP16_MANY(x, n)
 #else
 #  define BSWAP16(x) x = __builtin_bswap16(x);
 #  define BSWAP32(x) x = __builtin_bswap32(x);
+#  define BSWAP16_MANY(x, n) { s32 _i; for (_i = 0; _i < n; _i++) BSWAP16((x)[_i]) }
 #endif
 
 typedef struct {
@@ -92,16 +94,20 @@ s32 readaifccodebook(FILE *fhandle, s32 ****table, s16 *order, s16 *npredictors)
 s32 inner_product(s32 length, s32 *v1, s32 *v2);
 
 // quant.c
+s16 qsample(f32 x, s32 scale);
+void clamp(s32 fs, f32 *e, s32 *ie, s32 bits);
+s32 clip(s32 ix, s32 llevel, s32 ulevel);
 
 // vdecode.c
 void vdecodeframe(FILE *ifile, s32 *outp, s32 order, s32 ***coefTable);
 
 // vencode.c
+void vencodeframe(FILE *ofile, s16 *inBuffer, s32 *state, s32 ***coefTable, s32 order, s32 npredictors, s32 nsam);
 
 // util.c
 u32 readbits(u32 nbits, FILE *ifile);
 char *ReadPString(FILE *ifile);
-s32 lookupMarker(s32 *sample, s16 loopPoint, Marker *markers, s32 nmarkers);
+s32 lookupMarker(u32 *sample, s16 loopPoint, Marker *markers, s32 nmarkers);
 ALADPCMloop *readlooppoints(FILE *ifile, s16 *nloops);
 
 // sampleio.c

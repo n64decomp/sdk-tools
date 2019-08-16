@@ -113,13 +113,13 @@ s32 main(s32 argc, char **argv)
     while (!done)
     {
         num = fread(&Header, sizeof(Header), 1, ifile);
-        BSWAP32(Header.ckID)
-        BSWAP32(Header.ckSize)
         if (num <= 0)
         {
             done = 1;
             break;
         }
+        BSWAP32(Header.ckID)
+        BSWAP32(Header.ckSize)
 
         Header.ckSize++, Header.ckSize &= ~1;
         switch (Header.ckID)
@@ -127,17 +127,17 @@ s32 main(s32 argc, char **argv)
         case 0x434f4d4d: // COMM
             offset = ftell(ifile);
             num = fread(&CommChunk, sizeof(CommChunk), 1, ifile);
+            if (num <= 0)
+            {
+                fprintf(stderr, "%s: error parsing file [%s]\n", progname, argv[1]);
+                done = 1;
+            }
             BSWAP16(CommChunk.numChannels)
             BSWAP16(CommChunk.numFramesH)
             BSWAP16(CommChunk.numFramesL)
             BSWAP16(CommChunk.sampleSize)
             BSWAP16(CommChunk.compressionTypeH)
             BSWAP16(CommChunk.compressionTypeL)
-            if (num <= 0)
-            {
-                fprintf(stderr, "%s: error parsing file [%s]\n", progname, argv[1]);
-                done = 1;
-            }
             cType = (CommChunk.compressionTypeH << 16) + CommChunk.compressionTypeL;
             if (cType != 0x56415043) // VAPC
             {

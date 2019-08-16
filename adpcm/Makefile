@@ -9,6 +9,7 @@ NATIVE_CC := gcc
 NATIVE_CFLAGS := -g -Wall
 
 default: native
+all: irix native
 
 irix: vadpcm_dec_irix vadpcm_enc_irix
 native: vadpcm_dec_native vadpcm_enc_native
@@ -31,4 +32,4 @@ vadpcm_dec_native: vadpcm_dec.c vpredictor.c sampleio.c vdecode.c util.c
 vadpcm_enc_native: vadpcm_enc.c vpredictor.c quant.c util.c vencode.c
 	$(NATIVE_CC) $(NATIVE_CFLAGS) $^ -o $@ -lm
 
-.PHONY: default irix native clean
+.PHONY: default all irix native clean
