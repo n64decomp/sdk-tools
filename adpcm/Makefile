@@ -15,7 +15,7 @@ irix: vadpcm_dec_irix vadpcm_enc_irix
 native: vadpcm_dec_native vadpcm_enc_native
 
 clean:
-	$(RM) *.o vadpcm_dec vadpcm_enc vadpcm_dec_native vadpcm_enc_native
+	$(RM) *.o vadpcm_dec_irix vadpcm_enc_irix vadpcm_dec_native vadpcm_enc_native
 
 %.o: %.c
 	$(IRIX_CC) -c $(IRIX_CFLAGS) $< -o $@
