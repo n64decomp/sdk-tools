@@ -1,5 +1,9 @@
 #include "vadpcm.h"
 
+/**
+ * Compute x / scale rounded to the nearest integer, with x.5 (fuzzy with an
+ * epsilon of 1e-7) rounding towards zero.
+ */
 s16 qsample(f32 x, s32 scale)
 {
     if (x > 0.0f)
@@ -12,6 +16,10 @@ s16 qsample(f32 x, s32 scale)
     }
 }
 
+/**
+ * Round all ('fs' many) values in 'e' to the nearest 'bits'-bit integer,
+ * outputting to 'ie'.
+ */
 void clamp(s32 fs, f32 *e, s32 *ie, s32 bits)
 {
     s32 i;
@@ -42,15 +50,18 @@ void clamp(s32 fs, f32 *e, s32 *ie, s32 bits)
     }
 }
 
+/**
+ * Clamp ix to within [llevel, ulevel].
+ */
 s32 clip(s32 ix, s32 llevel, s32 ulevel)
 {
-    if (ix < llevel || ulevel < ix)
+    if (ix < llevel || ix > ulevel)
     {
         if (ix < llevel)
         {
             return llevel;
         }
-        if (ulevel < ix)
+        if (ix > ulevel)
         {
             return ulevel;
         }

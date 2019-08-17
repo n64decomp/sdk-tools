@@ -127,6 +127,7 @@ s32 inner_product(s32 length, s32 *v1, s32 *v2)
         out += *v1++ * *v2++;
     }
 
+    // Compute "out / 2^11", rounded down.
     dout = out / (1 << 11);
     fiout = dout * (1 << 11);
     if (out - fiout < 0)
