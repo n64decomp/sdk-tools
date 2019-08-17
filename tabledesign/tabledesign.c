@@ -9,6 +9,8 @@
 
 typedef long SampleFormat;
 
+#define MODE_READ "r"
+
 #else
 
 // The modern implementation of SGI's audiofile library which is in Ubuntu
@@ -23,6 +25,8 @@ typedef int SampleFormat;
 #define AFgetframecnt afGetFrameCount
 #define AFgetrate afGetRate
 #define AFreadframes afReadFrames
+
+#define MODE_READ "rb"
 
 #endif
 
@@ -104,7 +108,7 @@ int main(int argc, char **argv)
 
     argv = &argv[optind - 1];
 
-    afFile = AFopenfile(argv[1], "rb", NULL);
+    afFile = AFopenfile(argv[1], MODE_READ, NULL);
     if (afFile == NULL)
     {
         fprintf(stderr,

@@ -89,7 +89,7 @@ s32 main(s32 argc, char **argv)
     }
 
     argv += optind - 1;
-    if ((ifile = fopen(argv[1], "rb")) == NULL)
+    if ((ifile = fopen(argv[1], MODE_READ)) == NULL)
     {
         fprintf(stderr, "%s: bitstream file [%s] could not be opened\n", progname, argv[1]);
         exit(1);
