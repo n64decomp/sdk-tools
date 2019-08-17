@@ -104,7 +104,7 @@ int main(int argc, char **argv)
 
     argv = &argv[optind - 1];
 
-    afFile = AFopenfile(argv[1], "r", NULL);
+    afFile = AFopenfile(argv[1], "rb", NULL);
     if (afFile == NULL)
     {
         fprintf(stderr,

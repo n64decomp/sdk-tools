@@ -121,12 +121,12 @@ int main(int argc, char **argv)
     }
 
     argv += optind - 1;
-    if ((ifile = fopen(argv[1], "r")) == NULL)
+    if ((ifile = fopen(argv[1], "rb")) == NULL)
     {
         fprintf(stderr, "%s: input file [%s] could not be opened.\n", progname, argv[1]);
         exit(1);
     }
-    if ((ofile = fopen(argv[2], "w")) == NULL)
+    if ((ofile = fopen(argv[2], "wb")) == NULL)
     {
         fprintf(stderr, "%s: output file [%s] could not be opened.\n", progname, argv[2]);
         exit(1);
