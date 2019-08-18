@@ -26,7 +26,7 @@ static void fmtchan(s32 size, u8 *p, s32 *data, s32 stride)
 
 void writeout(FILE *outfd, s32 size, s32 *l_out, s32 *r_out, s32 chans)
 {
-    static u8 obuf[64];
+    static u8 obuf[0x1000];
     s32 i;
 
     switch (chans)
