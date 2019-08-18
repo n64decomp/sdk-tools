@@ -262,7 +262,7 @@ int main(int argc, char **argv)
                 loops[nloops].endLoop = InstChunk.sustainLoop.endLoop;
                 nloops++;
             }
-            if (InstChunk.sustainLoop.playMode == 1)
+            if (InstChunk.releaseLoop.playMode == 1)
             {
                 loops[nloops].beginLoop = InstChunk.releaseLoop.beginLoop;
                 loops[nloops].endLoop = InstChunk.releaseLoop.endLoop;
