@@ -161,8 +161,15 @@ s32 main(s32 argc, char **argv)
         case 0x53534e44: // SSND
             offset = ftell(ifile);
             fread(&SndDChunk, sizeof(SndDChunk), 1, ifile);
-            assert(SndDChunk.offset == 0); // line 165
-            assert(SndDChunk.blockSize == 0); // line 166
+            BSWAP32(SndDChunk.offset)
+            BSWAP32(SndDChunk.blockSize)
+            // The assert error messages specify line numbers 165/166. Match
+            // that using a #line directive.
+#ifdef __sgi
+#  line 164
+#endif
+            assert(SndDChunk.offset == 0);
+            assert(SndDChunk.blockSize == 0);
             soundPointer = ftell(ifile);
             fseek(ifile, offset + Header.ckSize, SEEK_SET);
             break;

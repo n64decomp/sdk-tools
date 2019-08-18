@@ -215,8 +215,13 @@ int main(int argc, char **argv)
             fread(&SndDChunk, sizeof(SoundDataChunk), 1, ifile);
             BSWAP32(SndDChunk.offset)
             BSWAP32(SndDChunk.blockSize)
-            assert(SndDChunk.offset == 0); // line 219
-            assert(SndDChunk.blockSize == 0); // line 220
+            // The assert error messages specify line numbers 219/220. Match
+            // that using a #line directive.
+#ifdef __sgi
+#  line 218
+#endif
+            assert(SndDChunk.offset == 0);
+            assert(SndDChunk.blockSize == 0);
             soundPointer = ftell(ifile);
             fseek(ifile, offset + Header.ckSize, SEEK_SET);
             break;
