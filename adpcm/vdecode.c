@@ -54,7 +54,7 @@ void vdecodeframe(FILE *ifile, s32 *outp, s32 order, s32 ***coefTable)
         {
             for (i = 0; i < order; i++)
             {
-                in_vec[i] = outp[i - order + 16];
+                in_vec[i] = outp[16 - order + i];
             }
         }
         else

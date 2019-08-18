@@ -27,7 +27,7 @@ void vencodeframe(FILE *ofile, s16 *inBuffer, s32 *state, s32 ***coefTable, s32 
     f32 se;
     f32 min;
 
-    // We are only given 'nsam' entries; pad with zeroes to 16.
+    // We are only given 'nsam' samples; pad with zeroes to 16.
     for (i = nsam; i < 16; i++)
     {
         inBuffer[i] = 0;
@@ -41,28 +41,28 @@ void vencodeframe(FILE *ofile, s16 *inBuffer, s32 *state, s32 ***coefTable, s32 
     optimalp = 0;
     for (k = 0; k < npredictors; k++)
     {
-        // Copy over the last 'order' entries from the previous output.
+        // Copy over the last 'order' samples from the previous output.
         for (i = 0; i < order; i++)
         {
             inVector[i] = state[16 - order + i];
         }
 
-        // For 8 entries...
+        // For 8 samples...
         for (i = 0; i < 8; i++)
         {
             // Compute a prediction based on 'order' values from the old state,
             // plus previous errors in this chunk, as an inner product with the
             // coefficient table.
             prediction[i] = inner_product(order + i, coefTable[k][i], inVector);
-            // Record the error in inVector (thus, its first 'order' entries
+            // Record the error in inVector (thus, its first 'order' samples
             // will contain actual values, the rest will be error terms), and
             // in floating point form in e (for no particularly good reason).
             inVector[i + order] = inBuffer[i] - prediction[i];
             e[i] = (f32) inVector[i + order];
         }
 
-        // For the next 8 entries, start with 'order' values from the end of
-        // the previous 8-entry chunk of inBuffer. (The code is equivalent to
+        // For the next 8 samples, start with 'order' values from the end of
+        // the previous 8-sample chunk of inBuffer. (The code is equivalent to
         // inVector[i] = inBuffer[8 - order + i].)
         for (i = 0; i < order; i++)
         {
@@ -165,13 +165,13 @@ out:;
             scale = 12;
         }
 
-        // Copy over the last 'order' entries from the previous output.
+        // Copy over the last 'order' samples from the previous output.
         for (i = 0; i < order; i++)
         {
             inVector[i] = saveState[16 - order + i];
         }
 
-        // For 8 entries...
+        // For 8 samples...
         for (i = 0; i < 8; i++)
         {
             // Compute a prediction based on 'order' values from the old state,
@@ -195,12 +195,12 @@ out:;
 
             // Record the quantized error in inVector for later predictions,
             // and the quantized (decoded) output in state (for use in the next
-            // batch of 8 entries).
+            // batch of 8 samples).
             inVector[i + order] = ix[i] * (1 << scale);
             state[i] = prediction[i] + inVector[i + order];
         }
 
-        // Copy over the last 'order' decoded entries from the above chunk.
+        // Copy over the last 'order' decoded samples from the above chunk.
         for (i = 0; i < order; i++)
         {
             inVector[i] = state[8 - order + i];

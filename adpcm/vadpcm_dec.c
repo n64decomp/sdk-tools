@@ -229,7 +229,7 @@ s32 main(s32 argc, char **argv)
     }
 
     fseek(ifile, soundPointer, SEEK_SET);
-    if (doloop != 0 && nloops > 0)
+    if (doloop && nloops > 0)
     {
 #ifndef __sgi
         struct sigaction int_act;
@@ -304,4 +304,3 @@ s32 main(s32 argc, char **argv)
     fclose(ifile);
     return 0;
 }
-

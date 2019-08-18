@@ -37,7 +37,7 @@ s32 readcodebook(FILE *fhandle, s32 ****table, s32 *order, s32 *npredictors)
             table_entry[k][*order] = table_entry[k - 1][*order - 1];
         }
 
-        table_entry[0][*order] = 0x800;
+        table_entry[0][*order] = 1 << 11;
 
         for (k = 1; k < 8; k++)
         {
@@ -95,7 +95,7 @@ s32 readaifccodebook(FILE *fhandle, s32 ****table, s16 *order, s16 *npredictors)
             table_entry[k][*order] = table_entry[k - 1][*order - 1];
         }
 
-        table_entry[0][*order] = 0x800;
+        table_entry[0][*order] = 1 << 11;
 
         for (k = 1; k < 8; k++)
         {
