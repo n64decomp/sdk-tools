@@ -10,18 +10,18 @@ static char usage[] = "[-t -l min_loop_length] -c codebook aifcfile compressedfi
 int main(int argc, char **argv)
 {
     s32 c;
-    char *progname;
-    s16 nloops;
+    char *progname = argv[0];
+    s16 nloops = 0;
     s16 numMarkers;
     s16 *inBuffer;
     s16 ts;
-    u32 minLoopLength;
-    s32 ***coefTable;
+    u32 minLoopLength = 800;
+    s32 ***coefTable = NULL;
     s32 *state;
     s32 order;
     s32 npredictors;
-    s32 done;
-    s32 truncate;
+    s32 done = 0;
+    s32 truncate = 0;
     s32 num;
     s32 tableSize;
     s32 nsam;
@@ -35,15 +35,15 @@ int main(int argc, char **argv)
     s32 offset;
     s32 cChunkPos;
     s32 currentPos;
-    s32 soundPointer;
-    s32 startPointer;
-    s32 startSoundPointer;
+    s32 soundPointer = 0;
+    s32 startPointer = 0;
+    s32 startSoundPointer = 0;
     s32 cType;
-    s32 nBytes;
+    s32 nBytes = 0;
     u32 loopEnd;
-    char *compName;
-    char *appCodeName;
-    char *appLoopName;
+    char *compName = "VADPCM ~4-1";
+    char *appCodeName = "VADPCMCODES";
+    char *appLoopName = "VADPCMLOOPS";
     u8 strnLen;
     Chunk AppChunk;
     Chunk FormChunk;
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     CommonChunk CommChunk;
     SoundDataChunk SndDChunk;
     InstrumentChunk InstChunk;
-    Loop *loops;
+    Loop *loops = NULL;
     ALADPCMloop *aloops;
     Marker *markers;
     CodeChunk cChunk;
@@ -61,20 +61,6 @@ int main(int argc, char **argv)
     FILE *ifile;
     FILE *ofile;
 
-    progname = argv[0];
-    nloops = 0;
-    minLoopLength = 800;
-    coefTable = NULL;
-    done = 0;
-    truncate = 0;
-    soundPointer = 0;
-    startPointer = 0;
-    startSoundPointer = 0;
-    nBytes = 0;
-    compName = "VADPCM ~4-1";
-    appCodeName = "VADPCMCODES";
-    appLoopName = "VADPCMLOOPS";
-    loops = 0;
     if (argc < 2)
     {
         fprintf(stderr, "%s %s\n", progname, usage);

@@ -35,24 +35,24 @@ s32 main(s32 argc, char **argv)
 {
     s32 c;
     u8 cc;
-    u8 doloop;
+    u8 doloop = 0;
     s16 order;
     s16 version;
     s16 nloops;
     s16 npredictors;
     s32 flags;
-    s32 ***coefTable;
+    s32 ***coefTable = NULL;
     s32 i;
     s32 j;
     s32 *outp;
     s32 *state;
-    s32 done;
+    s32 done = 0;
     s32 num;
     u32 ts;
     s32 soundPointer;
     s32 cType;
     s32 offset;
-    s32 currPos;
+    s32 currPos = 0;
     s32 nSamples;
     s32 framePos;
     s32 loopBegin;
@@ -64,14 +64,8 @@ s32 main(s32 argc, char **argv)
     SoundDataChunk SndDChunk;
     char *ChunkName;
     FILE *ifile;
-    char *progname;
+    char *progname = argv[0];
 
-    doloop = 0;
-    coefTable = NULL;
-    done = 0;
-    currPos = 0;
-
-    progname = argv[0];
     if (argc < 2)
     {
         fprintf(stderr, "%s %s\n", progname, usage);
