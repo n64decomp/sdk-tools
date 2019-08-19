@@ -185,18 +185,15 @@ s32 main(s32 argc, char **argv)
                     }
                     readaifccodebook(ifile, &coefTable, &order, &npredictors);
                 }
-                else
+                else if (strcmp("VADPCMLOOPS", ChunkName) == 0)
                 {
-                    if (strcmp("VADPCMLOOPS", ChunkName) == 0)
+                    fread(&version, sizeof(s16), 1, ifile);
+                    BSWAP16(version)
+                    if (version != 1)
                     {
-                        fread(&version, sizeof(s16), 1, ifile);
-                        BSWAP16(version)
-                        if (version != 1)
-                        {
-                            fprintf(stderr, "Non-identical loop chunk versions\n");
-                        }
-                        aloops = readlooppoints(ifile, &nloops);
+                        fprintf(stderr, "Non-identical loop chunk versions\n");
                     }
+                    aloops = readlooppoints(ifile, &nloops);
                 }
             }
             fseek(ifile, offset + Header.ckSize, SEEK_SET);
