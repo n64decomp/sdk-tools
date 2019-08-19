@@ -66,6 +66,10 @@ s32 main(s32 argc, char **argv)
     FILE *ifile;
     char *progname = argv[0];
 
+#ifndef __sgi
+    nloops = 0;
+#endif
+
     if (argc < 2)
     {
         fprintf(stderr, "%s %s\n", progname, usage);
