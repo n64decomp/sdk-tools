@@ -15,7 +15,7 @@ int main(int argc, char **argv)
     s16 numMarkers;
     s16 *inBuffer;
     s16 ts;
-    u32 minLoopLength = 800;
+    s32 minLoopLength = 800;
     s32 ***coefTable = NULL;
     s32 *state;
     s32 order;
