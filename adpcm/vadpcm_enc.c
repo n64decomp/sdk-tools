@@ -1,8 +1,8 @@
-#include <unistd.h>
 #include <string.h>
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <getopt.h>
 #include "vadpcm.h"
 
 static char usage[] = "[-t -l min_loop_length] -c codebook aifcfile compressedfile";
